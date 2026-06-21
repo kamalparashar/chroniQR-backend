@@ -72,7 +72,9 @@ func main() {
 
 	cfg := config.Load()
 	services.InitCrypto(cfg.EncryptionKey)
-	auth.InitAuth(cfg.JWTSecret)
+	if err := auth.InitAuth(cfg.SupabaseURL, cfg.JWTSecret); err != nil {
+		log.Fatalf("Fatal: auth init failed: %v", err)
+	}
 
 	// ── Database Connection ───────────────────────────────────────────────
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)

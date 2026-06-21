@@ -13,7 +13,8 @@ type Config struct {
 	Port            int
 	DBURL           string
 	RedisURL        string
-	JWTSecret       string
+	SupabaseURL     string
+	JWTSecret       string // legacy HS256 fallback
 	EncryptionKey   string
 	RedirectBaseURL string
 	GeoIPDBPath     string
@@ -85,7 +86,8 @@ func Load() *Config {
 		Port:            port,
 		DBURL:           mustEnv("DB_URL"),
 		RedisURL:        getEnv("REDIS_URL", ""),
-		JWTSecret:       mustEnv("JWT_SECRET"),
+		SupabaseURL:     getEnv("SUPABASE_URL", ""),
+		JWTSecret:       getEnv("JWT_SECRET", ""),
 		EncryptionKey:   getEnv("ENCRYPTION_KEY", "default-insecure-32-byte-secret-key!"),
 		RedirectBaseURL: mustEnv("REDIRECT_BASE_URL"),
 		GeoIPDBPath:     getEnv("GEOIP_DB_PATH", "./assets/GeoLite2-City.mmdb"),
